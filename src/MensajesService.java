@@ -15,7 +15,7 @@ public class MensajesService {
         MensajesDAO.crear_Mensaje_DB(registro);
     }
     public static void listar_mensaje(){
-
+        MensajesDAO.leer_mensajesDB();
     }
     public static void borrar_mensaje(){
 

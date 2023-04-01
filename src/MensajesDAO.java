@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MensajesDAO {
@@ -22,7 +23,27 @@ public class MensajesDAO {
         }
     }
     public static void leer_mensajesDB(){
+        Conexion db_connect = new Conexion();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
+        try(Connection conexion = db_connect.get_connection()){
+            String query = "SELECT * FROM mensajes";
+            /*String query = "INSERT INTO mensajes (mensaje, autor_mensaje) VALUES (?,?)";
+            String query = "SELECT * FROM mensajes WHERE `id_mensaje` = ?";*/
+            ps = conexion.prepareStatement(query);
+            rs=ps.executeQuery();
+            while (rs.next()){
+                System.out.println("ID:"+ rs.getInt("id_mensaje"));
+                System.out.println("Mensaje:"+ rs.getString("mensaje"));
+                System.out.println("Autor:"+ rs.getString("autor_mensaje"));
+                System.out.println("Fecha:"+ rs.getString("fecha_mensaje"));
+                System.out.println("");
+            }
+        }catch (SQLException e){
+            System.out.println("no se pudo recuperar los mensajes");
+            System.out.println(e);
+        }
     }
     public static void borrar_mensaje(int id_mensaje){
 
